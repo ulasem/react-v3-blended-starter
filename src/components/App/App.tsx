@@ -7,9 +7,12 @@ import type { Photo } from '../../types/photo';
 import { getPhotos } from '../../services/photos';
 import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import Loader from '../Loader/Loader';
+import Text from '../Text/Text';
+import Modal from '../Modal/Modal';
 
 export default function App() {
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -36,8 +39,14 @@ export default function App() {
         <Container>
           <Form onSubmit={handleSearch} />
           {isLoading && <Loader />}
-          {photos.length > 0 && <PhotosGallery photos={photos} />}
+          {isError && <Text textAlign="center">Nothing found!</Text>}
+          {photos.length > 0 && <PhotosGallery photos={photos} onSelect={setSelectedPhoto} />}
           <Toaster position="top-right" />
+          {selectedPhoto && (
+            <Modal onClose={() => setSelectedPhoto(null)}>
+              <img src={selectedPhoto.src.large} alt={selectedPhoto.alt} />
+            </Modal>
+          )}
         </Container>
       </Section>
     </>

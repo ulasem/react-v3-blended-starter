@@ -11,7 +11,7 @@ export default function PhotosGallery({ photos, onSelect }: PhotosGalleryProps) 
   return (
     <Grid>
       {photos.map(photo => (
-        <PhotosGalleryItem key={photo.id} photo={photo} onSelect={onSelect} />
+        <PhotosGalleryItem key={photo.id} photo={photo} onSelect={() => onSelect(photo)} />
       ))}
     </Grid>
   );
