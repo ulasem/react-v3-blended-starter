@@ -27,7 +27,7 @@ export default function App() {
       }
       setPhotos(fetchedPhotos);
     } catch {
-      setIsError(true);
+      setIsError(false);
     } finally {
       setIsLoading(false);
     }
